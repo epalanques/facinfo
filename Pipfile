@@ -8,6 +8,7 @@ pre-commit = "*"
 pylint = "*"
 wheel = "*"
 setuptools = "*"
+pipenv-setup = "*"
 
 [packages]
 bs4 = "*"
