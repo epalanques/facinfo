@@ -21,7 +21,7 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            'facinfo = facinfo.scrap'
+            'facinfo = facinfo.scrap:main'
         ]
     },
     data_files=[('.', ['Pipfile']), ],
