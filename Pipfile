@@ -13,8 +13,7 @@ pandas = "*"
 scholarly = "*"
 tqdm = "*"
 setuptools = "*"
-e1839a8 = {path = "."}
-pipfile = "*"
+wheel = "*"
 
 [requires]
 python_version = "3.8"
