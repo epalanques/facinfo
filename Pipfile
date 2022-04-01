@@ -6,6 +6,8 @@ verify_ssl = true
 [dev-packages]
 pre-commit = "*"
 pylint = "*"
+wheel = "*"
+setuptools = "*"
 
 [packages]
 bs4 = "*"
@@ -14,8 +16,6 @@ requests = "*"
 pandas = "*"
 scholarly = "*"
 tqdm = "*"
-setuptools = "*"
-wheel = "*"
 
 [requires]
 python_version = "3.8"
