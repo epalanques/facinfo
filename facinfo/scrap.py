@@ -75,7 +75,7 @@ def get_author_details(name: str):
     except StopIteration:
         logging.warning(f"Author {name} was not found!")
         result = {field: np.nan for field in FIELDS}
-        result["max_pub"] = np.nan
+        result["max_cit"] = np.nan
         result["pub>1000"] = np.nan
         return result
 
