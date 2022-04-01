@@ -97,12 +97,14 @@ def get_author_details(name: str):
     return result
 
 
-def scrap(university="BU"):
+def scrap(university="BU", max_n=None):
     """
     Main function. Returns a dataframe with
     information about all the factulty members of a university
     """
     faculty = get_faculty_list(university=university)
+    if max_n is not None:
+        faculty = faculty[:max_n]
 
     results = {}
     with logging_redirect_tqdm():

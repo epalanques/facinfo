@@ -1,4 +1,5 @@
 # Imports: standard library
+import os
 import logging
 
 # Imports: first party
@@ -31,10 +32,13 @@ def main():
     output_file = args.output
     if not output_file:
         output_file = f"./{args.university}_faculty.csv"
+
+    if not os.path.exists(os.path.dirname(output_file)):
+        raise ValueError(f"Path {output_file} does not exist!")
     print(f"Saving results in {output_file}")
 
     # Scrap -- main algo
-    result_df = scrap(university=args.university)
+    result_df = scrap(university=args.university, max_n=args.max_n)
 
     # Save file
     result_df.to_csv(output_file)

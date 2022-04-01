@@ -22,4 +22,11 @@ def parse_args():
         default=0,
         help="Verbosity level. Defaults to quiet. -v gives warnings. -vv gives info",
     )
+    parser.add_argument(
+        "--max-n",
+        "-n",
+        help="Maximum number of faculty members to include",
+        type=int,
+        default=None,
+    )
     return parser.parse_args()
