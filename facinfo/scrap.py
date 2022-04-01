@@ -89,7 +89,7 @@ def get_author_details(name: str):
             field_val = None
         result[field] = field_val
 
-    result["max_pub"] = author["publications"][0]["num_citations"]
+    result["max_cit"] = author["publications"][0]["num_citations"]
     result["pub>1000"] = sum(
         [pub["num_citations"] > 1000 for pub in author["publications"]],
     )
