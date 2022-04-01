@@ -43,9 +43,12 @@ repos:
   - id: black
 
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v0.942
+  rev: ''
   hooks:
   - id: mypy
+    additional_dependencies:
+      - types-requests
+      - types-toml
     args:
     - --ignore-missing-imports
     - --follow-imports=skip

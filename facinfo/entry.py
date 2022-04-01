@@ -1,8 +1,15 @@
+# Imports: standard library
 import logging
-from facinfo.arguments import parse_args
-from facinfo.scrap import scrap
 
-def set_verbosity(v_level):
+# Imports: first party
+from facinfo.scrap import scrap
+from facinfo.arguments import parse_args
+
+
+def set_verbosity(v_level: int):
+    """
+    Define verbosity level
+    """
     if v_level == 0:
         level = logging.CRITICAL
     if v_level == 1:
@@ -12,7 +19,9 @@ def set_verbosity(v_level):
 
     logging.basicConfig(level=level)
 
+
 def main():
+    """Main entry point"""
     args = parse_args()
 
     # Set verbosity
@@ -32,6 +41,5 @@ def main():
     print("Done!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
-

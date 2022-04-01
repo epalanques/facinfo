@@ -1,25 +1,39 @@
-from bs4 import BeautifulSoup
-import requests
+# Imports: standard library
+import logging
+from typing import List
+
+# Imports: third party
 import numpy as np
 import pandas as pd
-from scholarly import scholarly
+import requests
+from bs4 import BeautifulSoup
 from tqdm import tqdm
+from scholarly import scholarly
 from tqdm.contrib.logging import logging_redirect_tqdm
 
-import logging
-
 HEADERS = {
-    'User-agent':
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582"
+    "User-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 "
+    "Edge/18.19582",
 }
-FIELDS = ["name", "affiliation", "email_domain", "interests", "hindex", "citedby", "citedby5y", "homepage"]
+FIELDS = [
+    "name",
+    "affiliation",
+    "email_domain",
+    "interests",
+    "hindex",
+    "citedby",
+    "citedby5y",
+    "homepage",
+]
 
 
 def get_bu_faculty():
+    """Returns faculty members from BU - bioinformatics"""
     logging.info("Getting BU faculty list...")
     url = "https://www.bu.edu/bioinformatics/people/faculty/"
     html = requests.get(url, headers=HEADERS).text
-    soup = BeautifulSoup(html, 'lxml')
+    soup = BeautifulSoup(html, "lxml")
 
     table = soup.select_one("#post-146")
     fac_list = list(table.find_all("a"))
@@ -28,11 +42,12 @@ def get_bu_faculty():
     return fac_names
 
 
-def get_mit_meche_faculty():
+def get_mit_meche_faculty() -> List[str]:
+    """Returns faculty members from MIT - MECHE"""
     logging.info("Getting MIT MECHE faculty...")
     url = "http://meche.mit.edu/people"
     html = requests.get(url, headers=HEADERS).text
-    soup = BeautifulSoup(html, 'lxml')
+    soup = BeautifulSoup(html, "lxml")
 
     fac_list = list(soup.find_all("div", class_="vc-child"))
     fac_names = [row.select_one("span").get_text() for row in fac_list[1:]]
@@ -40,7 +55,8 @@ def get_mit_meche_faculty():
     return fac_names
 
 
-def get_faculty_list(university):
+def get_faculty_list(university: str) -> List[str]:
+    """Returns a list with the faculty names of a university"""
     if university == "BU":
         return get_bu_faculty()
     if university == "MIT":
@@ -48,7 +64,11 @@ def get_faculty_list(university):
     raise ValueError(f"University {university} not valid. Available are BU and MIT")
 
 
-def get_author_details(name):
+def get_author_details(name: str):
+    """
+    Queries google scholar for a specific person
+    and returns a dictionary with all the author details "
+    """
     search_query = scholarly.search_author(name)
     try:
         first_auth = next(search_query)  # Grab the first author only
@@ -65,17 +85,23 @@ def get_author_details(name):
     for field in FIELDS:
         try:
             field_val = author[field]
-        except:
+        except KeyError:
             field_val = None
         result[field] = field_val
 
     result["max_pub"] = author["publications"][0]["num_citations"]
-    result["pub>1000"] = sum([pub["num_citations"]>1000 for pub in author["publications"]])
+    result["pub>1000"] = sum(
+        [pub["num_citations"] > 1000 for pub in author["publications"]],
+    )
 
     return result
 
 
 def scrap(university="BU"):
+    """
+    Main function. Returns a dataframe with
+    information about all the factulty members of a university
+    """
     faculty = get_faculty_list(university=university)
 
     results = {}
@@ -86,9 +112,3 @@ def scrap(university="BU"):
 
     results = pd.DataFrame(results).T
     return results
-
-
-
-
-
-
