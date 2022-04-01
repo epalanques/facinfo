@@ -1,0 +1,30 @@
+[tool.black]
+line-length="88"
+
+[tool.isort]
+profile = "black"
+length_sort = "True"
+import_heading_stdlib = "Imports: standard library"
+import_heading_firstparty = "Imports: first party"
+import_heading_thirdparty = "Imports: third party"
+default_section = "THIRDPARTY"
+known_first_party = ["ml4c3", "definitions", "tensormap"]
+known_third_party = ["gitlint", "h5py", "matplotlib", "numpy", "pandas", "pytest"]
+ignore_whitespace = "True"
+
+[tool.pylint.'MESSAGES CONTROL']
+disable="import-error, too-many-nested-blocks, too-many-lines, too-many-branches, unspecified-encoding, invalid-name, too-many-boolean-expressions, bad-continuation, missing-module-docstring, missing-function-docstring, too-few-public-methods, too-many-arguments, too-many-locals, too-many-instance-attributes, too-many-ancestors, fixme, logging-fstring-interpolation, protected-access, ungrouped-imports, too-many-statements, too-many-return-statements"
+
+[tool.pylint.'SIMILARITIES']
+min-similarity-lines="10"
+ignore-comments="yes"
+ignore-docstrings="yes"
+ignore-imports="yes"
+
+[tool.pylint.'BASIC']
+argument-rgx="([a-z_][a-z0-9_]{2,30})|tm$"     # snake_case + tm
+variable-rgx="([a-z_][a-z0-9_]{2,30})|tm$"     # snake_case + tm
+const-rgx="([^\\W\\da-z][^\\Wa-z]*|__.*__|name)$"  # UPPER_CASE + name
+
+[tool.pylint.'FORMAT']
+max-line-length="88"
