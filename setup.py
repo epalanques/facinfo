@@ -11,9 +11,10 @@ setup(
     version=__version__,
     author=__author__,
     author_email='eric.palanques@gmail.com',
-    licence=__copyright__,
+    license=__copyright__,
     description=__DESCRIPTION__,
     long_description=__DESCRIPTION__,
+    url="https://github.com/epalanques/facinfo",
     packages=find_packages(
         exclude=[]
     ),
